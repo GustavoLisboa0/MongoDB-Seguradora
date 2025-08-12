@@ -3,19 +3,19 @@ import requests
 import json
 import config
 
-# 1. Ler a planilha Excel
+# Le a planilha Seguradora
 df_planilha = pd.read_excel("DB_Seguradora.xlsx")
 
-# 2. Converter para lista de dicionários
+# Converte de lista para dicionario
 dados = df_planilha.to_dict(orient="records")
 
-# 3. Cabeçalhos da requisição
+# Insere cabeçalhos
 headers = {
     "Content-Type": "application/json",
     "api-key": config.MONGO_API_KEY
 }
 
-# 4. Corpo da requisição
+# Requisiçao
 payload = {
     "dataSource": config.MONGO_CLUSTER,
     "database": config.MONGO_DATABASE,
@@ -23,13 +23,13 @@ payload = {
     "documents": dados
 }
 
-# 5. Enviar via POST
+# Metodo POST
 response = requests.post(
     config.MONGO_DATA_API_URL,
     headers=headers,
     data=json.dumps(payload)
 )
 
-# 6. Exibir resposta
+# Resposta (Post)
 print("Status:", response.status_code)
 print("Resposta:", response.json())
